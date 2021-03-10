@@ -1,9 +1,12 @@
 package main
 
-func main() {
-	newDeck := newDeck()
-	hand, remandingDeck := deal(newDeck, 3)
-	hand.print()
-	remandingDeck.print()
+import (
+	"fmt"
+)
 
+func main() {
+	nDeck := newDeck()
+	nDeck.saveToFile("cards")
+
+	fmt.Println(len(nDeck))
 }
