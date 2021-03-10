@@ -3,8 +3,10 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"math/rand"
 	"os"
 	"strings"
+	"time"
 )
 
 // Deck
@@ -27,6 +29,14 @@ func (d deck) saveToFile(filename string) error {
 func (d deck) print() {
 	for _, card := range d {
 		fmt.Println(card)
+	}
+}
+func (d deck) shuffle() {
+	source := rand.NewSource(time.Now().UnixNano())
+	r := rand.New(source)
+	for i := range d {
+		np := r.Intn(len(d) - 1)
+		d[i], d[np] = d[np], d[i]
 	}
 }
 
