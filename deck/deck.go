@@ -1,4 +1,4 @@
-package main
+package deck
 
 import (
 	"fmt"
@@ -9,29 +9,30 @@ import (
 	"time"
 )
 
-// Deck
-type deck []string
+// Deck hello goodbye.
+type Deck []string
 
-func newDeckFromFile(filename string) deck {
+// NewDeckFromFile retrieves the byte slice of the filename, and returns a Deck.
+func NewDeckFromFile(filename string) Deck {
 	bs, err := ioutil.ReadFile(filename)
 	if err != nil {
 		fmt.Println("err", err)
 		os.Exit(1)
 		newDeck()
 	}
-	return deck(strings.Split(string(bs), ","))
+	return Deck(strings.Split(string(bs), ","))
 }
 
-func (d deck) saveToFile(filename string) error {
+func (d Deck) saveToFile(filename string) error {
 	return ioutil.WriteFile(filename, []byte(d.toString()), 0666)
 }
 
-func (d deck) print() {
+func (d Deck) print() {
 	for _, card := range d {
 		fmt.Println(card)
 	}
 }
-func (d deck) shuffle() {
+func (d Deck) shuffle() {
 	source := rand.NewSource(time.Now().UnixNano())
 	r := rand.New(source)
 	for i := range d {
@@ -40,14 +41,14 @@ func (d deck) shuffle() {
 	}
 }
 
-// deal is given a deck and a handSize.  We return slices of each (deck - handsize).
-func deal(d deck, handSize int) (deck, deck) {
+// deal is given a Deck and a handSize.  We return slices of each (Deck - handsize).
+func deal(d Deck, handSize int) (Deck, Deck) {
 	return d[:handSize], d[handSize:]
 }
 
-// newDeck creates a 52 card deck, in theory.
-func newDeck() deck {
-	cards := deck{}
+// NewDeck creates a 52 card Deck, in theory.
+func NewDeck() Deck {
+	cards := Deck{}
 	cardSuits := []string{"Spades", "Diamonds", "Hearts", "Clubs"}
 	cardVals := []string{"Ace", "Two", "Three", "Four"}
 
@@ -59,7 +60,7 @@ func newDeck() deck {
 	return cards
 }
 
-// toString converts the deck of cards into a CSV, ready for write.
-func (d deck) toString() string {
+// ToString converts the Deck of cards into a CSV, ready for write.
+func (d Deck) ToString() string {
 	return strings.Join([]string(d), ",")
 }

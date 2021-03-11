@@ -1,0 +1,16 @@
+version: "2"
+
+services:
+  app:
+    image: golang:1.6.1-alpine
+    volumes:
+      - .:/go/src/go-examples
+    working_dir: /go/src/go-examples
+    command: go run main.go deck.go
+    links:
+      - redis
+    environment:
+      REDIS_URL: redis:6379
+
+  redis:
+    image: redis:alpine
