@@ -18,13 +18,13 @@ func NewDeckFromFile(filename string) Deck {
 	if err != nil {
 		fmt.Println("err", err)
 		os.Exit(1)
-		newDeck()
+		NewDeck()
 	}
 	return Deck(strings.Split(string(bs), ","))
 }
 
-func (d Deck) saveToFile(filename string) error {
-	return ioutil.WriteFile(filename, []byte(d.toString()), 0666)
+func (d Deck) SaveToFile(filename string) error {
+	return ioutil.WriteFile(filename, []byte(d.ToString()), 0666)
 }
 
 func (d Deck) print() {
